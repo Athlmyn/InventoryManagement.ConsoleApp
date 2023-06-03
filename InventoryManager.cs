@@ -106,22 +106,36 @@ namespace InventoryManagement.ConsoleApp {
 
         private void UpdateProduct()
         {
-            var updateProduct = new Product();
-
             try
             {
-                updateProduct.Id = DataValidator.GetIntInput( "Enter product id: " );
-                updateProduct.Name = DataValidator.GetStringInput( "Enter new product name: " );
-                updateProduct.Description = DataValidator.GetStringInput( "Enter new product description: " );
-                updateProduct.Price = DataValidator.GetDecimalInput( "Enter new product price: " );
-            }
-            catch (ArgumentException)
-            {
-                return;
-            }
+                var productId = DataValidator.GetIntInput( "Enter the id of the product you want to update: " );
+                var existingProduct = _productService.GetProductById( productId );
 
-            _productService.UpdateProduct( updateProduct );
-            Console.WriteLine( "Product updated successfully." );
+                if (existingProduct == null)
+                {
+                    Console.WriteLine( $"Product with id {productId} does not exist." );
+                    return;
+                }
+
+                var updatedName = DataValidator.GetStringInput( $"Enter new product name (current: {existingProduct.Name}): " );
+                var updatedDescription = DataValidator.GetStringInput( $"Enter new product description (current: {existingProduct.Description}): " );
+                var updatedPrice = DataValidator.GetDecimalInput( $"Enter new product price (current: {existingProduct.Price}): " );
+
+                var updatedProduct = new Product
+                {
+                    Id = productId,
+                    Name = updatedName,
+                    Description = updatedDescription,
+                    Price = updatedPrice
+                };
+
+                _productService.UpdateProduct( updatedProduct );
+                Console.WriteLine( "Product updated successfully." );
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine( ex.Message );
+            }
         }
 
         private void AdjustInventory()
