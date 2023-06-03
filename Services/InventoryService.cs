@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace InventoryManagement.ConsoleApp.Services {
-    internal class InventoryService {
+    public class InventoryService {
         public List<Inventory> Inventories { get; set; }
 
         public InventoryService()
