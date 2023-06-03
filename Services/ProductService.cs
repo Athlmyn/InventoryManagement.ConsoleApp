@@ -36,10 +36,18 @@ namespace InventoryManagement.ConsoleApp.Services {
             var p = _products.First( p => p.Id == productId );
             RemoveProduct( p );
         }
-        public void UpdateProduct(Product product)
+        public void UpdateProduct(Product updatedProduct)
         {
-            RemoveProduct( product );
-            AddProduct( product );
+            var existingProduct = _products.FirstOrDefault( p => p.Id == updatedProduct.Id );
+
+            if (existingProduct == null)
+            {
+                throw new ArgumentException( $"Product with id {updatedProduct.Id} does not exist." );
+            }
+
+            existingProduct.Name = updatedProduct.Name;
+            existingProduct.Description = updatedProduct.Description;
+            existingProduct.Price = updatedProduct.Price;
         }
         public List<Product> GetAllProducts()
         {
