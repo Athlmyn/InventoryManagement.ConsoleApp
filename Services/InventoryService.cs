@@ -8,24 +8,29 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.ConsoleApp.Services {
     public class InventoryService : IInventoryService {
-        public List<Inventory> Inventories { get; set; }
+        private List<Inventory> _inventories;
 
         public InventoryService()
         {
-            Inventories = new List<Inventory>();
+            _inventories = new List<Inventory>();
         }
 
         public void AdjustInventory(int productId, int quantity)
         {
-            var inventory = Inventories.FirstOrDefault( i => i.ProductId == productId );
+            var inventory = _inventories.FirstOrDefault( i => i.ProductId == productId );
             if (inventory != null)
             {
                 inventory.Quantity = quantity;
             }
             else
             {
-                Inventories.Add( new Inventory { ProductId = productId, Quantity = quantity } );
+                _inventories.Add( new Inventory { ProductId = productId, Quantity = quantity } );
             }
+        }
+
+        public Inventory GetInventoryByProductId(int productId)
+        {
+            return _inventories.FirstOrDefault( i => i.ProductId == productId );
         }
     }
 }

@@ -19,44 +19,26 @@ namespace InventoryManagement.ConsoleApp {
 
         public void Run()
         {
-            while (true) // Main loop
+            bool keepRunning = true;
+            while (keepRunning) // Main loop
             {
                 DrawUI();
 
-                var option = Console.ReadLine();
+                var choice = DataValidator.GetIntInput( "Your option: " );
 
-                switch (option)
+                switch (choice)
                 {
-                    case "1": // Add product
-                        AddProduct();
-                        break;
-
-                    case "2": // Remove product
-                        RemoveProduct();
-                        break;
-
-                    case "3": // Update product
-                        UpdateProduct();
-                        break;
-
-                    case "4": // Adjust inventory
-                        AdjustInventory();
-                        break;
-
-                    case "5": // View all products
-                        ViewAllProducts();
-                        break;
-
-                    case "6": // Exit
-                        return;
-
-                    default:
-                        Console.WriteLine( "Invalid option, please choose again." );
-                        break;
+                    case 1: AddProduct(); break;
+                    case 2: RemoveProduct(); break;
+                    case 3: UpdateProduct(); break;
+                    case 4: AdjustInventory(); break;
+                    case 5: ViewAllProducts(); break;
+                    case 6: keepRunning = false; break;
+                    default: Console.WriteLine( "Invalid option." ); break;
                 }
             }
 
-            
+
         }
         private void DrawUI()
         {
@@ -83,7 +65,7 @@ namespace InventoryManagement.ConsoleApp {
 
                 _productService.AddProduct( newProduct );
                 Console.WriteLine( $"Product added successfully with ID {newProduct.Id}." );
-            }   
+            }
             catch (ArgumentException ex)
             {
                 Console.WriteLine( ex.Message );
@@ -156,6 +138,9 @@ namespace InventoryManagement.ConsoleApp {
                     return;
                 }
 
+                var currentQuantity = _inventoryService.GetInventoryByProductId( products[productIndex].Id ).Quantity;
+                Console.WriteLine( $"Current quantity of {products[productIndex].Name}: {currentQuantity}" );
+
                 var quantity = DataValidator.GetIntInput( "Enter new quantity: " );
 
                 _inventoryService.AdjustInventory( products[productIndex].Id, quantity );
@@ -166,6 +151,7 @@ namespace InventoryManagement.ConsoleApp {
                 return;
             }
         }
+
 
         private void ViewAllProducts()
         {
