@@ -33,7 +33,8 @@ namespace InventoryManagement.ConsoleApp {
                     case 3: UpdateProduct(); break;
                     case 4: AdjustInventory(); break;
                     case 5: ViewAllProducts(); break;
-                    case 6: keepRunning = false; break;
+                    case 6: ViewInventory(); break;
+                    case 9: keepRunning = false; break;
                     default: Console.WriteLine( "Invalid option." ); break;
                 }
             }
@@ -49,7 +50,8 @@ namespace InventoryManagement.ConsoleApp {
             Console.WriteLine( "3. Update Product" );
             Console.WriteLine( "4. Adjust Inventory" );
             Console.WriteLine( "5. View All Products" );
-            Console.WriteLine( "6. Exit" );
+            Console.WriteLine( "6. View Inventory" );
+            Console.WriteLine( "9. Exit" );
             Console.Write( "Choose an option: " );
         }
 
@@ -159,6 +161,15 @@ namespace InventoryManagement.ConsoleApp {
             foreach (var product in _productService.GetAllProducts())
             {
                 Console.WriteLine( $"Id: {product.Id}, Name: {product.Name}, Description: {product.Description}, Price: {product.Price}" );
+            }
+        }
+        private void ViewInventory()
+        {
+            var allInventory = _inventoryService.GetAllInventories();
+            foreach (var inventory in allInventory)
+            {
+                var product = _productService.GetProductById( inventory.ProductId );
+                Console.WriteLine( $"Product ID: {product.Id}, Product Name: {product.Name}, Quantity: {inventory.Quantity}" );
             }
         }
     }
