@@ -95,7 +95,7 @@ namespace InventoryManagement.ConsoleApp {
             try
             {
                 var removeProductId = DataValidator.GetIntInput( "Enter product id to remove: " );
-                _productService.RemoveProduct( removeProductId );
+                _productService.RemoveProductById( removeProductId );
                 Console.WriteLine( "Product removed successfully." );
             }
             catch (ArgumentException)

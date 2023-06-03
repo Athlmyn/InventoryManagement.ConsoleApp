@@ -31,24 +31,32 @@ namespace InventoryManagement.ConsoleApp.Services {
         {
             _products.Remove( product );
         }
-        public void RemoveProduct(int productId)
+        public void RemoveProductById(int productId)
         {
             var p = _products.First( p => p.Id == productId );
             RemoveProduct( p );
         }
         public void UpdateProduct(Product updatedProduct)
         {
-            var existingProduct = _products.FirstOrDefault( p => p.Id == updatedProduct.Id );
-
-            if (existingProduct == null)
-            {
-                throw new ArgumentException( $"Product with id {updatedProduct.Id} does not exist." );
-            }
+            Product? existingProduct = GetProductById( updatedProduct.Id );
 
             existingProduct.Name = updatedProduct.Name;
             existingProduct.Description = updatedProduct.Description;
             existingProduct.Price = updatedProduct.Price;
         }
+
+        public Product GetProductById(int productId)
+        {
+            var existingProduct = _products.FirstOrDefault( p => p.Id == productId );
+
+            if (existingProduct == null)
+            {
+                throw new ArgumentException( $"Product with id {productId} does not exist." );
+            }
+
+            return existingProduct;
+        }
+
         public List<Product> GetAllProducts()
         {
             return _products;

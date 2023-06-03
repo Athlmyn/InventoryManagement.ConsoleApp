@@ -9,8 +9,9 @@ namespace InventoryManagement.ConsoleApp.Services.Interfaces {
     public interface IProductService {
         void AddProduct(Product product);
         void RemoveProduct(Product product);
-        void RemoveProduct(int productId);
+        void RemoveProductById(int productId);
         void UpdateProduct(Product product);
+        Product GetProductById(int productId);
         List<Product> GetAllProducts();
     }
 }
