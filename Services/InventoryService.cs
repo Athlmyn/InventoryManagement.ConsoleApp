@@ -28,6 +28,11 @@ namespace InventoryManagement.ConsoleApp.Services {
             }
         }
 
+        public List<Inventory> GetAllInventories()
+        {
+            return _inventories;
+        }
+
         public Inventory GetInventoryByProductId(int productId)
         {
             return _inventories.FirstOrDefault( i => i.ProductId == productId );

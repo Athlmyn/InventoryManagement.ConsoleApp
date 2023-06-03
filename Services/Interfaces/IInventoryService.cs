@@ -9,5 +9,6 @@ namespace InventoryManagement.ConsoleApp.Services.Interfaces {
     public interface IInventoryService {
         void AdjustInventory(int productId, int quantity);
         Inventory GetInventoryByProductId(int productId);
+        List<Inventory> GetAllInventories();
     }
 }
