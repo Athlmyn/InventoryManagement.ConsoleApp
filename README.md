@@ -14,7 +14,9 @@ The Inventory Management System is a console-based application developed in .NET
 
 4. **Adjust Inventory:** The inventory quantity for a product can be adjusted, with the current quantity being displayed before adjustment.
 
-5. **View Inventory:** Displays a list of all products in the inventory along with their quantities.
+5. **View Products:** Displays a list of all products available and their name, description and price.
+
+6. **View Inventory:** Displays a list of all products in the inventory along with their quantities.
 
 ## Principles & Design Patterns
 
