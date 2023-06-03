@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.ConsoleApp.Services {
     public class ProductService : IProductService {
-        public List<Product> Products { get; set; }
+        private List<Product> Products { get; set; }
 
         public ProductService()
         {
@@ -32,6 +32,10 @@ namespace InventoryManagement.ConsoleApp.Services {
         {
             RemoveProduct( product );
             AddProduct( product );
+        }
+        public List<Product> GetAllProducts()
+        {
+            return Products;
         }
     }
 }
