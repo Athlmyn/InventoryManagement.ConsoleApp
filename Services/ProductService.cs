@@ -8,24 +8,32 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.ConsoleApp.Services {
     public class ProductService : IProductService {
-        private List<Product> Products { get; set; }
+        private List<Product> _products;
+        private int _nextId = 1;
 
         public ProductService()
         {
-            Products = new List<Product>();
+            _products = new List<Product>();
         }
 
-        public void AddProduct(Product product)
+        public void AddProduct(Product newProduct)
         {
-            Products.Add( product );
+            if (_products.Any( p => p.Name == newProduct.Name && p.Id == newProduct.Id ))
+            {
+                throw new ArgumentException( $"Product with name {newProduct.Name} and id {newProduct.Id} already exists." );
+            }
+
+            newProduct.Id = _nextId++;
+
+            _products.Add( newProduct );
         }
         public void RemoveProduct(Product product)
         {
-            Products.Remove( product );
+            _products.Remove( product );
         }
         public void RemoveProduct(int productId)
         {
-            var p = Products.First( p => p.Id == productId );
+            var p = _products.First( p => p.Id == productId );
             RemoveProduct( p );
         }
         public void UpdateProduct(Product product)
@@ -35,7 +43,7 @@ namespace InventoryManagement.ConsoleApp.Services {
         }
         public List<Product> GetAllProducts()
         {
-            return Products;
+            return _products;
         }
     }
 }
