@@ -17,20 +17,21 @@ namespace InventoryManagement.ConsoleApp.Services {
 
         public void AddProduct(Product product)
         {
-
+            Products.Add( product );
         }
         public void RemoveProduct(Product product)
         {
-
+            Products.Remove( product );
         }
         public void RemoveProduct(int productId)
         {
             var p = Products.First( p => p.Id == productId );
-            Products.Remove(p);
+            RemoveProduct( p );
         }
         public void UpdateProduct(Product product)
         {
-
+            RemoveProduct( product );
+            AddProduct( product );
         }
     }
 }
